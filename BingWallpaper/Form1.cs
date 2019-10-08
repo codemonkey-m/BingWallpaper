@@ -1,0 +1,183 @@
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+
+
+namespace BingWallpaper
+{
+    public partial class Form1 : Form
+    {
+        enum ShowType {
+            Center,         //居中
+            Tiling,         //平铺
+            Stretching,     //拉伸
+
+            ShowType_Max,
+        };
+
+        int[,] arrType = new int[(int)ShowType.ShowType_Max, 2] {
+            {0, 0},
+            {1, 0},
+            {0, 2}
+        };
+
+        [DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
+        private static extern int SystemParametersInfo(
+            int uAction,
+            int uParam,
+            string lpvParam,
+            int fuWinIni
+        );
+
+        WebClient page_client = new WebClient();
+        string strCurPicName = "";
+        const string strRegName = "BingWallpaper";
+        string strMainPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\" + strRegName;
+        System.Windows.Forms.Timer timerCheck = new System.Windows.Forms.Timer();
+
+        public Form1()
+        {
+            InitializeComponent();
+
+            CheckAndCreateDir();
+
+            StartTimer();
+
+            RefreshImage();
+
+            //判断开机启动状态
+            AutoRun.Checked = CheckRegExists(strRegName);
+        }
+
+        //检测并创建图片文件夹
+        private void CheckAndCreateDir()
+        {
+            if (!Directory.Exists(strMainPath))
+                Directory.CreateDirectory(strMainPath);
+        }
+
+        //启动定时器
+        private void StartTimer()
+        {
+            timerCheck.Tick += new EventHandler(OnTimerRun);
+            timerCheck.Enabled = true;
+            timerCheck.Interval = 60 * 60 * 1000;
+        }
+
+        //定时器回调
+        private void OnTimerRun(object sender, EventArgs e)
+        {
+            RefreshImage();
+        }
+
+        //刷新图片
+        private void RefreshImage()
+        {
+            strCurPicName = strMainPath + "\\" + DateTime.Now.ToString("yyyyMMdd") + ".jpg";
+
+            //检查文件是否存在
+            if (File.Exists(strCurPicName))
+                return;
+
+            string strHtml = page_client.DownloadString("https://bing.ioliu.cn/");
+            //查找第一个image
+            Match reMatch = Regex.Match(strHtml, "data-progressive=\"(\\S*)\"");
+            if (reMatch.Success)
+                page_client.DownloadFile(reMatch.Groups[1].Value, strCurPicName);
+
+            SetWallpaper(ShowType.Center);
+        }
+
+        //隐藏窗口
+        protected override void SetVisibleCore(bool value)
+        {
+            base.SetVisibleCore(false);
+        }
+
+        //选择居中
+        private void Center_Click(object sender, EventArgs e)
+        {
+            SetWallpaper(ShowType.Center);
+        }
+
+        //选择平铺
+        private void Tiling_Click(object sender, EventArgs e)
+        {
+            SetWallpaper(ShowType.Tiling);
+        }
+
+        //选择拉伸
+        private void Stretching_Click(object sender, EventArgs e)
+        {
+            SetWallpaper(ShowType.Stretching);
+        }
+
+        private void SetWallpaper(ShowType nType)
+        {
+            #region 默认1080p,不需要设置
+            //设置墙纸显示方式
+            /*RegistryKey myRegKey = Registry.CurrentUser.OpenSubKey("Control Panel/desktop", true);
+            if (null != myRegKey)
+            {
+                //赋值
+                myRegKey.SetValue("TileWallpaper", arrType[(int)nType, 0]);
+                myRegKey.SetValue("WallpaperStyle", arrType[(int)nType, 1]);
+
+                //关闭该项,并将改动保存到磁盘
+                myRegKey.Close();
+            }
+            else
+            {
+                notifyIcon1.ShowBalloonTip(1000, "获取注册表项失败", "使用默认的拉伸方式显示", ToolTipIcon.Info);
+            }*/
+            #endregion
+
+            //设置墙纸
+            SystemParametersInfo(20, 1, strCurPicName, 1);
+        }
+
+        private void Button_Exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void AutoRun_Click(object sender, EventArgs e)
+        {
+            //存在就删除,不存在就新增
+            if (CheckRegExists(strRegName, true))
+                AutoRun.Checked = false;
+            else
+                AutoRun.Checked = true;
+        }
+
+        //检查注册表项存在
+        private bool CheckRegExists(string strName, bool bHandle = false)
+        {
+            bool bRet = false;
+            RegistryKey reAutoRun = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            foreach (string keyName in reAutoRun.GetSubKeyNames())
+            {
+                if (keyName == strName)
+                {
+                    bRet = true;
+                    break;
+                }
+            }
+
+            if (bHandle)
+            {
+                if (!bRet)  //没有的时候创建
+                    reAutoRun.SetValue(strRegName, System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+                else        //有的话就删除
+                    reAutoRun.DeleteValue(strRegName);
+            }
+
+            reAutoRun.Close();
+            return bRet;
+        }
+    }
+}
