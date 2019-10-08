@@ -1,0 +1,9 @@
+E:\codes\C#\BingWallpaper\BingWallpaper\bin\Release\BingWallpaper.exe.config
+E:\codes\C#\BingWallpaper\BingWallpaper\bin\Release\BingWallpaper.exe
+E:\codes\C#\BingWallpaper\BingWallpaper\bin\Release\BingWallpaper.pdb
+E:\codes\C#\BingWallpaper\BingWallpaper\obj\Release\BingWallpaper.Form1.resources
+E:\codes\C#\BingWallpaper\BingWallpaper\obj\Release\BingWallpaper.Properties.Resources.resources
+E:\codes\C#\BingWallpaper\BingWallpaper\obj\Release\BingWallpaper.csproj.GenerateResource.cache
+E:\codes\C#\BingWallpaper\BingWallpaper\obj\Release\BingWallpaper.csproj.CoreCompileInputs.cache
+E:\codes\C#\BingWallpaper\BingWallpaper\obj\Release\BingWallpaper.exe
+E:\codes\C#\BingWallpaper\BingWallpaper\obj\Release\BingWallpaper.pdb
