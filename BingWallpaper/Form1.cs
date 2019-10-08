@@ -159,14 +159,8 @@ namespace BingWallpaper
         {
             bool bRet = false;
             RegistryKey reAutoRun = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            foreach (string keyName in reAutoRun.GetSubKeyNames())
-            {
-                if (keyName == strName)
-                {
-                    bRet = true;
-                    break;
-                }
-            }
+            if (null != reAutoRun.GetValue(strName))
+                bRet = true;
 
             if (bHandle)
             {
