@@ -38,6 +38,7 @@
             this.Stretching = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoRun = new System.Windows.Forms.ToolStripMenuItem();
             this.Button_Exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.Refresh_Img = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,10 +53,11 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sadadaToolStripMenuItem,
+            this.Refresh_Img,
             this.AutoRun,
             this.Button_Exit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 114);
             // 
             // sadadaToolStripMenuItem
             // 
@@ -65,7 +67,7 @@
             this.Stretching});
             this.sadadaToolStripMenuItem.Enabled = false;
             this.sadadaToolStripMenuItem.Name = "sadadaToolStripMenuItem";
-            this.sadadaToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.sadadaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sadadaToolStripMenuItem.Text = "显示方式";
             this.sadadaToolStripMenuItem.Visible = false;
             // 
@@ -93,16 +95,23 @@
             // AutoRun
             // 
             this.AutoRun.Name = "AutoRun";
-            this.AutoRun.Size = new System.Drawing.Size(124, 22);
+            this.AutoRun.Size = new System.Drawing.Size(180, 22);
             this.AutoRun.Text = "开机启动";
             this.AutoRun.Click += new System.EventHandler(this.AutoRun_Click);
             // 
             // Button_Exit
             // 
             this.Button_Exit.Name = "Button_Exit";
-            this.Button_Exit.Size = new System.Drawing.Size(124, 22);
+            this.Button_Exit.Size = new System.Drawing.Size(180, 22);
             this.Button_Exit.Text = "退出";
             this.Button_Exit.Click += new System.EventHandler(this.Button_Exit_Click);
+            // 
+            // Refresh_Img
+            // 
+            this.Refresh_Img.Name = "Refresh_Img";
+            this.Refresh_Img.Size = new System.Drawing.Size(180, 22);
+            this.Refresh_Img.Text = "手动刷新";
+            this.Refresh_Img.Click += new System.EventHandler(this.Refresh_Img_Click);
             // 
             // Form1
             // 
@@ -127,6 +136,7 @@
         private System.Windows.Forms.ToolStripMenuItem Tiling;
         private System.Windows.Forms.ToolStripMenuItem Stretching;
         private System.Windows.Forms.ToolStripMenuItem AutoRun;
+        private System.Windows.Forms.ToolStripMenuItem Refresh_Img;
     }
 }
 

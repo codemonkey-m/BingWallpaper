@@ -77,17 +77,25 @@ namespace BingWallpaper
         //刷新图片
         private void RefreshImage()
         {
-            strCurPicName = strMainPath + "\\" + DateTime.Now.ToString("yyyyMMdd") + ".jpg";
+            string strHtml = page_client.DownloadString("https://bing.ioliu.cn/");
+            //查找第一个image
+            Match reMatch = Regex.Match(strHtml, "data-progressive=\"(\\S*)\"");
+            if (!reMatch.Success)
+                return;
+
+                //取文件名
+            Match reFileName = Regex.Match(reMatch.Groups[1].Value, "bing\\/(.*)$");
+            if (!reFileName.Success)
+                return;
+
+            //文件完整路径
+            strCurPicName = strMainPath + "\\" + reFileName.Groups[1].Value;
 
             //检查文件是否存在
             if (File.Exists(strCurPicName))
                 return;
 
-            string strHtml = page_client.DownloadString("https://bing.ioliu.cn/");
-            //查找第一个image
-            Match reMatch = Regex.Match(strHtml, "data-progressive=\"(\\S*)\"");
-            if (reMatch.Success)
-                page_client.DownloadFile(reMatch.Groups[1].Value, strCurPicName);
+            page_client.DownloadFile(reMatch.Groups[1].Value, strCurPicName);
 
             SetWallpaper(ShowType.Center);
         }
@@ -172,6 +180,12 @@ namespace BingWallpaper
 
             reAutoRun.Close();
             return bRet;
+        }
+
+        //手动刷新
+        private void Refresh_Img_Click(object sender, EventArgs e)
+        {
+            RefreshImage();
         }
     }
 }
