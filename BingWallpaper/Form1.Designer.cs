@@ -39,6 +39,7 @@
             this.AutoRun = new System.Windows.Forms.ToolStripMenuItem();
             this.Button_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.Refresh_Img = new System.Windows.Forms.ToolStripMenuItem();
+            this.Open_Img_Dir = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,11 +54,12 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sadadaToolStripMenuItem,
+            this.Open_Img_Dir,
             this.Refresh_Img,
             this.AutoRun,
             this.Button_Exit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 136);
             // 
             // sadadaToolStripMenuItem
             // 
@@ -113,6 +115,13 @@
             this.Refresh_Img.Text = "手动刷新";
             this.Refresh_Img.Click += new System.EventHandler(this.Refresh_Img_Click);
             // 
+            // Open_Img_Dir
+            // 
+            this.Open_Img_Dir.Name = "Open_Img_Dir";
+            this.Open_Img_Dir.Size = new System.Drawing.Size(180, 22);
+            this.Open_Img_Dir.Text = "打开图片目录";
+            this.Open_Img_Dir.Click += new System.EventHandler(this.Open_Img_Dir_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -137,6 +146,7 @@
         private System.Windows.Forms.ToolStripMenuItem Stretching;
         private System.Windows.Forms.ToolStripMenuItem AutoRun;
         private System.Windows.Forms.ToolStripMenuItem Refresh_Img;
+        private System.Windows.Forms.ToolStripMenuItem Open_Img_Dir;
     }
 }
 
