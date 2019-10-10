@@ -36,6 +36,7 @@ namespace BingWallpaper
         WebClient page_client = new WebClient();
         string strCurPicName = "";
         const string strRegName = "BingWallpaper";
+        const string strSelfName = "Bing壁纸";
         string strMainPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\" + strRegName;
         System.Windows.Forms.Timer timerCheck = new System.Windows.Forms.Timer();
 
@@ -75,29 +76,32 @@ namespace BingWallpaper
         }
 
         //刷新图片
-        private void RefreshImage()
+        private bool RefreshImage()
         {
             string strHtml = page_client.DownloadString("https://bing.ioliu.cn/");
             //查找第一个image
             Match reMatch = Regex.Match(strHtml, "data-progressive=\"(\\S*)\"");
             if (!reMatch.Success)
-                return;
+                return false;
 
                 //取文件名
             Match reFileName = Regex.Match(reMatch.Groups[1].Value, "bing\\/(.*)$");
             if (!reFileName.Success)
-                return;
+                return false;
 
             //文件完整路径
             strCurPicName = strMainPath + "\\" + reFileName.Groups[1].Value;
 
             //检查文件是否存在
             if (File.Exists(strCurPicName))
-                return;
+                return false;
 
             page_client.DownloadFile(reMatch.Groups[1].Value, strCurPicName);
 
             SetWallpaper(ShowType.Center);
+
+            ShowTips("壁纸已刷新.");
+            return true;
         }
 
         //隐藏窗口
@@ -185,12 +189,18 @@ namespace BingWallpaper
         //手动刷新
         private void Refresh_Img_Click(object sender, EventArgs e)
         {
-            RefreshImage();
+            if (!RefreshImage())
+                ShowTips("无新壁纸.");
         }
 
         private void Open_Img_Dir_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("explorer.exe", strMainPath);
+        }
+
+        private void ShowTips(string str)
+        {
+            notifyIcon1.ShowBalloonTip(1000, strSelfName, DateTime.Now.ToLocalTime().ToString() + "\n" + str, ToolTipIcon.Info);
         }
     }
 }
