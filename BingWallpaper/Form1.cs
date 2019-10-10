@@ -96,7 +96,15 @@ namespace BingWallpaper
             if (File.Exists(strCurPicName))
                 return false;
 
-            page_client.DownloadFile(reMatch.Groups[1].Value, strCurPicName);
+            try
+            {
+                page_client.DownloadFile(reMatch.Groups[1].Value, strCurPicName);
+            }
+            catch (Exception e)
+            {
+                ShowTips("有新壁纸,但是下载失败.请手动刷新.\n" + e.Message);
+                return true;
+            }
 
             SetWallpaper(ShowType.Center);
 
