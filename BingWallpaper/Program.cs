@@ -16,7 +16,15 @@ namespace BingWallpaper
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            Form1 form1 = new Form1();
+            try {
+                Application.Run(form1);
+            }
+            catch (Exception e) {
+                form1.ShowTips("发生异常\n" + e.Message);
+                throw;
+            }
         }
     }
 }

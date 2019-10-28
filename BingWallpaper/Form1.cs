@@ -78,7 +78,15 @@ namespace BingWallpaper
         //刷新图片
         private bool RefreshImage()
         {
-            string strHtml = page_client.DownloadString("https://bing.ioliu.cn/");
+            string strHtml = "";
+            try {
+                strHtml = page_client.DownloadString("https://bing.ioliu.cn/");
+            }
+            catch (Exception e) {
+                ShowTips("检查新壁纸失败.\n" + e.Message);
+                return true;
+            }
+
             //查找第一个image
             Match reMatch = Regex.Match(strHtml, "data-progressive=\"(\\S*)\"");
             if (!reMatch.Success)
@@ -96,12 +104,10 @@ namespace BingWallpaper
             if (File.Exists(strCurPicName))
                 return false;
 
-            try
-            {
+            try {
                 page_client.DownloadFile(reMatch.Groups[1].Value, strCurPicName);
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 ShowTips("有新壁纸,但是下载失败.请手动刷新.\n" + e.Message);
                 return true;
             }
@@ -206,7 +212,7 @@ namespace BingWallpaper
             System.Diagnostics.Process.Start("explorer.exe", strMainPath);
         }
 
-        private void ShowTips(string str)
+        public void ShowTips(string str)
         {
             notifyIcon1.ShowBalloonTip(1000, strSelfName, DateTime.Now.ToLocalTime().ToString() + "\n" + str, ToolTipIcon.Info);
         }
