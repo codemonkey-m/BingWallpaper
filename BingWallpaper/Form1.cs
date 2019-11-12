@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -37,11 +38,16 @@ namespace BingWallpaper
         string strCurPicName = "";
         const string strRegName = "BingWallpaper";
         const string strSelfName = "Bing壁纸";
+        const string strPicDescFile = "PicDesc.ini";
+        const string strSectionName = "desc";
         string strMainPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\" + strRegName;
         System.Windows.Forms.Timer timerCheck = new System.Windows.Forms.Timer();
 
         public Form1()
         {
+            page_client.Headers.Add("Accept-Encoding", "");
+            page_client.Encoding = System.Text.Encoding.GetEncoding("GB2312");
+
             InitializeComponent();
 
             CheckAndCreateDir();
@@ -80,7 +86,7 @@ namespace BingWallpaper
         {
             string strHtml = "";
             try {
-                strHtml = page_client.DownloadString("https://bing.ioliu.cn/");
+                strHtml = Encoding.UTF8.GetString(page_client.DownloadData("https://bing.ioliu.cn/"));
             }
             catch (Exception e) {
                 ShowTips("检查新壁纸失败.\n" + e.Message);
@@ -98,7 +104,13 @@ namespace BingWallpaper
                 return false;
 
             //文件完整路径
-            strCurPicName = strMainPath + "\\" + reFileName.Groups[1].Value;
+            string strFileName = reFileName.Groups[1].Value;
+            strCurPicName = strMainPath + "\\" + strFileName;
+
+            //获取文件的描述
+            reMatch = Regex.Match(strHtml, @"<h3>(.*?)</h3>");
+            if (reMatch.Success)
+                SetIconText(reMatch.Groups[1].Value);
 
             //检查文件是否存在
             if (File.Exists(strCurPicName))
@@ -215,6 +227,11 @@ namespace BingWallpaper
         public void ShowTips(string str)
         {
             notifyIcon1.ShowBalloonTip(1000, strSelfName, DateTime.Now.ToLocalTime().ToString() + "\n" + str, ToolTipIcon.Info);
+        }
+
+        private void SetIconText(string str)
+        {
+            notifyIcon1.Text = strSelfName + "\n" + str;
         }
     }
 }
