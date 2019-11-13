@@ -108,9 +108,9 @@ namespace BingWallpaper
             strCurPicName = strMainPath + "\\" + strFileName;
 
             //获取文件的描述
-            reMatch = Regex.Match(strHtml, @"<h3>(.*?)</h3>");
-            if (reMatch.Success)
-                SetIconText(reMatch.Groups[1].Value);
+            reFileName = Regex.Match(strHtml, @"<h3>(.*?)</h3>");
+            if (reFileName.Success)
+                SetIconText(reFileName.Groups[1].Value);
 
             //检查文件是否存在
             if (File.Exists(strCurPicName))
