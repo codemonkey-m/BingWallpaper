@@ -110,7 +110,14 @@ namespace BingWallpaper
             //获取文件的描述
             reFileName = Regex.Match(strHtml, @"<h3>(.*?)</h3>");
             if (reFileName.Success)
-                SetIconText(reFileName.Groups[1].Value);
+            {
+                string strDesc = reFileName.Groups[1].Value;
+                //超长截断
+                if (strDesc.Length >= 55)
+                    strDesc = strDesc.Substring(0, 55);
+
+                SetIconText(strDesc);
+            }
 
             //检查文件是否存在
             if (File.Exists(strCurPicName))
@@ -203,9 +210,9 @@ namespace BingWallpaper
             if (bHandle)
             {
                 if (!bRet)  //没有的时候创建
-                    reAutoRun.SetValue(strRegName, System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+                    reAutoRun.SetValue(strName, System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
                 else        //有的话就删除
-                    reAutoRun.DeleteValue(strRegName);
+                    reAutoRun.DeleteValue(strName);
             }
 
             reAutoRun.Close();
