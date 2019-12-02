@@ -37,7 +37,7 @@ namespace BingWallpaper
         WebClient page_client = new WebClient();
         string strCurPicName = "";
         const string strRegName = "BingWallpaper";
-        const string strSelfName = "Bing壁纸";
+        const string strSelfName = "Bing壁纸 v0.0.1.0";
         const string strPicDescFile = "PicDesc.ini";
         const string strSectionName = "desc";
         string strMainPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\" + strRegName;
@@ -113,8 +113,8 @@ namespace BingWallpaper
             {
                 string strDesc = reFileName.Groups[1].Value;
                 //超长截断
-                if (strDesc.Length >= 55)
-                    strDesc = strDesc.Substring(0, 55);
+                if (strDesc.Length >= (62 - strSelfName.Length))
+                    strDesc = strDesc.Substring(0, (62 - strSelfName.Length));
 
                 SetIconText(strDesc);
             }
@@ -239,6 +239,11 @@ namespace BingWallpaper
         private void SetIconText(string str)
         {
             notifyIcon1.Text = strSelfName + "\n" + str;
+        }
+
+        private void About_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/codemonkey-m/BingWallpaper");
         }
     }
 }

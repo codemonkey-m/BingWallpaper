@@ -36,10 +36,11 @@
             this.Center = new System.Windows.Forms.ToolStripMenuItem();
             this.Tiling = new System.Windows.Forms.ToolStripMenuItem();
             this.Stretching = new System.Windows.Forms.ToolStripMenuItem();
+            this.Open_Img_Dir = new System.Windows.Forms.ToolStripMenuItem();
+            this.Refresh_Img = new System.Windows.Forms.ToolStripMenuItem();
             this.AutoRun = new System.Windows.Forms.ToolStripMenuItem();
             this.Button_Exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.Refresh_Img = new System.Windows.Forms.ToolStripMenuItem();
-            this.Open_Img_Dir = new System.Windows.Forms.ToolStripMenuItem();
+            this.About = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,9 +58,10 @@
             this.Open_Img_Dir,
             this.Refresh_Img,
             this.AutoRun,
+            this.About,
             this.Button_Exit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 136);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 158);
             // 
             // sadadaToolStripMenuItem
             // 
@@ -94,6 +96,20 @@
             this.Stretching.Text = "拉伸";
             this.Stretching.Click += new System.EventHandler(this.Stretching_Click);
             // 
+            // Open_Img_Dir
+            // 
+            this.Open_Img_Dir.Name = "Open_Img_Dir";
+            this.Open_Img_Dir.Size = new System.Drawing.Size(180, 22);
+            this.Open_Img_Dir.Text = "打开图片目录";
+            this.Open_Img_Dir.Click += new System.EventHandler(this.Open_Img_Dir_Click);
+            // 
+            // Refresh_Img
+            // 
+            this.Refresh_Img.Name = "Refresh_Img";
+            this.Refresh_Img.Size = new System.Drawing.Size(180, 22);
+            this.Refresh_Img.Text = "手动刷新";
+            this.Refresh_Img.Click += new System.EventHandler(this.Refresh_Img_Click);
+            // 
             // AutoRun
             // 
             this.AutoRun.Name = "AutoRun";
@@ -108,19 +124,12 @@
             this.Button_Exit.Text = "退出";
             this.Button_Exit.Click += new System.EventHandler(this.Button_Exit_Click);
             // 
-            // Refresh_Img
+            // About
             // 
-            this.Refresh_Img.Name = "Refresh_Img";
-            this.Refresh_Img.Size = new System.Drawing.Size(180, 22);
-            this.Refresh_Img.Text = "手动刷新";
-            this.Refresh_Img.Click += new System.EventHandler(this.Refresh_Img_Click);
-            // 
-            // Open_Img_Dir
-            // 
-            this.Open_Img_Dir.Name = "Open_Img_Dir";
-            this.Open_Img_Dir.Size = new System.Drawing.Size(180, 22);
-            this.Open_Img_Dir.Text = "打开图片目录";
-            this.Open_Img_Dir.Click += new System.EventHandler(this.Open_Img_Dir_Click);
+            this.About.Name = "About";
+            this.About.Size = new System.Drawing.Size(180, 22);
+            this.About.Text = "关于";
+            this.About.Click += new System.EventHandler(this.About_Click);
             // 
             // Form1
             // 
@@ -147,6 +156,7 @@
         private System.Windows.Forms.ToolStripMenuItem AutoRun;
         private System.Windows.Forms.ToolStripMenuItem Refresh_Img;
         private System.Windows.Forms.ToolStripMenuItem Open_Img_Dir;
+        private System.Windows.Forms.ToolStripMenuItem About;
     }
 }
 
