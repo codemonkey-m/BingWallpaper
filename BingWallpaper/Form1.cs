@@ -37,7 +37,7 @@ namespace BingWallpaper
         WebClient page_client = new WebClient();
         string strCurPicName = "";
         const string strRegName = "BingWallpaper";
-        const string strSelfName = "Bing壁纸 v0.0.1.0";
+        const string strSelfName = "Bing壁纸 v0.0.1.1";
         const string strPicDescFile = "PicDesc.ini";
         const string strSectionName = "desc";
         string strMainPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\" + strRegName;
