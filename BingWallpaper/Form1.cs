@@ -46,6 +46,9 @@ namespace BingWallpaper
         public Form1()
         {
             page_client.Headers.Add("Accept-Encoding", "");
+            page_client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " +
+                                  "Windows NT 5.2; .NET CLR 1.0.3705;)");
+
             page_client.Encoding = System.Text.Encoding.GetEncoding("GB2312");
 
             InitializeComponent();
@@ -94,7 +97,7 @@ namespace BingWallpaper
             }
 
             //查找第一个image
-            Match reMatch = Regex.Match(strHtml, "data-progressive=\"(\\S*)\"");
+            Match reMatch = Regex.Match(strHtml, "data-progressive=\"(\\S*.jpg)");
             if (!reMatch.Success)
                 return false;
 
@@ -122,7 +125,6 @@ namespace BingWallpaper
             //检查文件是否存在
             if (File.Exists(strCurPicName))
                 return false;
-
             try {
                 page_client.DownloadFile(reMatch.Groups[1].Value, strCurPicName);
             }
