@@ -34,7 +34,6 @@ namespace BingWallpaper
             int fuWinIni
         );
 
-        WebClient page_client = new WebClient();
         string strCurPicName = "";
         const string strRegName = "BingWallpaper";
         const string strSelfName = "Bing壁纸 v0.0.1.1";
@@ -45,12 +44,6 @@ namespace BingWallpaper
 
         public Form1()
         {
-            page_client.Headers.Add("Accept-Encoding", "");
-            page_client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " +
-                                  "Windows NT 5.2; .NET CLR 1.0.3705;)");
-
-            page_client.Encoding = System.Text.Encoding.GetEncoding("GB2312");
-
             InitializeComponent();
 
             CheckAndCreateDir();
@@ -87,6 +80,11 @@ namespace BingWallpaper
         //刷新图片
         private bool RefreshImage()
         {
+            WebClient page_client = new WebClient();
+            page_client.Headers.Add("Accept-Encoding", "");
+            page_client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; " + "Windows NT 5.2; .NET CLR 1.0.3705;)");
+            page_client.Encoding = System.Text.Encoding.GetEncoding("GB2312");
+
             string strHtml = "";
             try {
                 strHtml = Encoding.UTF8.GetString(page_client.DownloadData("https://bing.ioliu.cn/"));
