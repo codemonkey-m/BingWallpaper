@@ -99,15 +99,17 @@ namespace BingWallpaper
             if (!reMatch.Success)
                 return false;
 
-                //取文件名
-            Match reFileName = Regex.Match(reMatch.Groups[1].Value, "bing\\/(.*)$");
+            //图片地址,替换为1920x1080
+            string strImageUrl = reMatch.Groups[1].Value.Replace("640x480", "1920x1080");
+
+            //取文件名
+            Match reFileName = Regex.Match(strImageUrl, "bing\\/(.*)$");
             if (!reFileName.Success)
                 return false;
 
-            //文件完整路径
-            string strFileName = reFileName.Groups[1].Value;
-            strCurPicName = strMainPath + "\\" + strFileName;
-
+            //本地文件完整路径
+            strCurPicName = strMainPath + "\\" + reFileName.Groups[1].Value;
+            
             //获取文件的描述
             reFileName = Regex.Match(strHtml, @"<h3>(.*?)</h3>");
             if (reFileName.Success)
@@ -124,7 +126,7 @@ namespace BingWallpaper
             if (File.Exists(strCurPicName))
                 return false;
             try {
-                page_client.DownloadFile(reMatch.Groups[1].Value, strCurPicName);
+                page_client.DownloadFile(strImageUrl, strCurPicName);
             }
             catch (Exception e) {
                 ShowTips("有新壁纸,但是下载失败.请手动刷新.\n" + e.Message);
