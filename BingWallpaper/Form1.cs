@@ -36,9 +36,9 @@ namespace BingWallpaper
 
         string strCurPicName = "";
         const string strRegName = "BingWallpaper";
-        const string strSelfName = "Bing壁纸 v0.0.1.3";
-        const string strPicDescFile = "PicDesc.ini";
-        const string strSectionName = "desc";
+        const string strSelfName = "Bing壁纸 v0.0.1.4";
+        //const string strPicDescFile = "PicDesc.ini";
+        //const string strSectionName = "desc";
         string strMainPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\" + strRegName;
         System.Windows.Forms.Timer timerCheck = new System.Windows.Forms.Timer();
 
@@ -230,7 +230,7 @@ namespace BingWallpaper
 
         private void Open_Img_Dir_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", strMainPath);
+            System.Diagnostics.Process.Start("explorer.exe", "/select," + strCurPicName);
         }
 
         public void ShowTips(string str)
